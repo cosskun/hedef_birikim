@@ -37,6 +37,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: _onTabSelected,
         items: const [

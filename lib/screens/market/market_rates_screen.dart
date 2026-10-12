@@ -224,31 +224,38 @@ class _MarketRatesScreenState extends State<MarketRatesScreen> {
                       Text(
                         rate.name,
                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 2),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryEmerald.withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(4),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryEmerald.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                rate.symbol,
+                                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                              ),
                             ),
-                            child: Text(
-                              rate.symbol,
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                            const SizedBox(width: 4),
+                            Text(
+                              '• ${rate.category.displayName} • ${rate.unit}',
+                              style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                             ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '• ${rate.category.displayName} • Birim: ${rate.unit}',
-                            style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(width: 6),
                 StatBadge(
                   text: CurrencyFormatter.formatPercent(rate.changeRate24h),
                   icon: isUp ? Icons.arrow_drop_up_rounded : Icons.arrow_drop_down_rounded,
@@ -256,7 +263,9 @@ class _MarketRatesScreenState extends State<MarketRatesScreen> {
                 ),
                 const SizedBox(width: 2),
                 IconButton(
-                  icon: const Icon(Icons.tune_rounded, size: 18),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                  icon: const Icon(Icons.tune_rounded, size: 17),
                   tooltip: 'Özel Fiyat Belirle',
                   onPressed: () => _openEditRateModal(context, rate, portfolio),
                 ),
@@ -268,40 +277,74 @@ class _MarketRatesScreenState extends State<MarketRatesScreen> {
             const SizedBox(height: 10),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Bozdurma (Piyasa Alış)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald)),
-                    const SizedBox(height: 2),
-                    Text(
-                      CurrencyFormatter.format(rate.buyPrice),
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Bozdurma (Alış)',
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          CurrencyFormatter.format(rate.buyPrice),
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('Satın Alma (Piyasa Satış)', style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
-                    const SizedBox(height: 2),
-                    Text(
-                      CurrencyFormatter.format(rate.sellPrice),
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
-                    ),
-                  ],
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Satın Alma (Satış)',
+                        style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.center,
+                        child: Text(
+                          CurrencyFormatter.format(rate.sellPrice),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('Makas Farkı', style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
-                    const SizedBox(height: 2),
-                    Text(
-                      CurrencyFormatter.format(rate.sellPrice - rate.buyPrice),
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.info),
-                    ),
-                  ],
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Makas Farkı',
+                        style: TextStyle(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          CurrencyFormatter.format(rate.sellPrice - rate.buyPrice),
+                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.info),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -212,9 +212,15 @@ class _AddEditAssetDialogState extends State<AddEditAssetDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    isEditing ? 'Varlığı Düzenle' : (isCash ? '💵 Nakit / TL Ekle' : 'Yeni Varlık / Birikim Ekle'),
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        isEditing ? 'Varlığı Düzenle' : (isCash ? '💵 Nakit / TL Ekle' : 'Yeni Varlık / Birikim Ekle'),
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
@@ -326,10 +332,15 @@ class _AddEditAssetDialogState extends State<AddEditAssetDialog> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      isCash ? 'Hızlı Hesap Türleri' : '${_selectedCategory.displayName} Seçenekleri',
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                    Expanded(
+                      child: Text(
+                        isCash ? 'Hızlı Hesap Türleri' : '${_selectedCategory.displayName} Seçenekleri',
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     TextButton.icon(
                       style: TextButton.styleFrom(visualDensity: VisualDensity.compact, padding: EdgeInsets.zero),
                       icon: const Icon(Icons.search_rounded, size: 14),

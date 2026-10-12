@@ -97,9 +97,15 @@ class _AddEditGoalDialogState extends State<AddEditGoalDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    isEditing ? 'Hedefi Düzenle' : 'Yeni Hedef Oluştur',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        isEditing ? 'Hedefi Düzenle' : 'Yeni Hedef Oluştur',
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),

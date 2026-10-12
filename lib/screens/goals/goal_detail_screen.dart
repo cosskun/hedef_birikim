@@ -119,11 +119,14 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () => _showQuickDepositDialog(context, goal),
                       icon: const Icon(Icons.add_card_rounded, size: 18),
-                      label: const Text('Para / Birikim Ekle'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Para Ekle'),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryEmerald,
                         foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         textStyle: const TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -134,9 +137,12 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
                     child: OutlinedButton.icon(
                       onPressed: () => _openAddAssetForThisGoal(context, goal.id),
                       icon: const Icon(Icons.account_balance_wallet_outlined, size: 18),
-                      label: const Text('Varlık Tahsis Et'),
+                      label: const FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('Varlık Tahsis Et'),
+                      ),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         textStyle: const TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -299,22 +305,30 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
-            progress.isReached
-                ? 'Tebrikler!'
-                : CurrencyFormatter.format(progress.remainingAmount, currencyCode: goal.currency, isPrivacy: isPrivacy),
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w800,
-              color: progress.isReached ? AppColors.profit : AppColors.gold,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+            child: Text(
+              progress.isReached
+                  ? 'Tebrikler!'
+                  : CurrencyFormatter.format(progress.remainingAmount, currencyCode: goal.currency, isPrivacy: isPrivacy),
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+                color: progress.isReached ? AppColors.profit : AppColors.gold,
+              ),
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            'Mevcut: ${CurrencyFormatter.format(progress.currentAmount, currencyCode: goal.currency, isPrivacy: isPrivacy)} / Hedef: ${CurrencyFormatter.format(goal.targetAmount, currencyCode: goal.currency, isPrivacy: isPrivacy)}',
-            style: TextStyle(
-              fontSize: 13,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+            child: Text(
+              'Mevcut: ${CurrencyFormatter.format(progress.currentAmount, currencyCode: goal.currency, isPrivacy: isPrivacy)} / Hedef: ${CurrencyFormatter.format(goal.targetAmount, currencyCode: goal.currency, isPrivacy: isPrivacy)}',
+              style: TextStyle(
+                fontSize: 13,
+                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -471,11 +485,17 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
                       Text(
                         'Kalan Gün',
                         style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        '${progress.daysLeft} Gün',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '${progress.daysLeft} Gün',
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
@@ -495,13 +515,19 @@ class _GoalDetailScreenState extends State<GoalDetailScreen> {
                       Text(
                         'Önerilen Aylık Birikim',
                         style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        progress.isReached
-                            ? '₺0'
-                            : CurrencyFormatter.format(monthlyNeeded, currencyCode: goal.currency, isPrivacy: isPrivacy),
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          progress.isReached
+                              ? '₺0'
+                              : CurrencyFormatter.format(monthlyNeeded, currencyCode: goal.currency, isPrivacy: isPrivacy),
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                        ),
                       ),
                     ],
                   ),

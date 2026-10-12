@@ -277,15 +277,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'TOPLAM BİRİKİM & VARLIKLAR',
-                style: TextStyle(
-                  fontSize: 12,
-                  letterSpacing: 1.1,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              Expanded(
+                child: Text(
+                  'TOPLAM BİRİKİM & VARLIKLAR',
+                  style: TextStyle(
+                    fontSize: 12,
+                    letterSpacing: 1.1,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
+              const SizedBox(width: 8),
               StatBadge(
                 text: isPrivacy ? '••• %' : CurrencyFormatter.formatPercent(totalPnLPercent),
                 icon: isProfitable ? Icons.trending_up_rounded : Icons.trending_down_rounded,
@@ -294,34 +299,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
           const SizedBox(height: 10),
-          Text(
-            CurrencyFormatter.format(totalNetWorth, isPrivacy: isPrivacy),
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w900,
-              color: isDark ? Colors.white : AppColors.textPrimaryLight,
-              letterSpacing: -0.5,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              CurrencyFormatter.format(totalNetWorth, isPrivacy: isPrivacy),
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                color: isDark ? Colors.white : AppColors.textPrimaryLight,
+                letterSpacing: -0.5,
+              ),
             ),
           ),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              Text(
-                'Toplam Kâr/Zarar: ',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: isDark ? AppColors.textMutedDark : AppColors.textSecondaryLight,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+                Text(
+                  'Toplam Kâr/Zarar: ',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark ? AppColors.textMutedDark : AppColors.textSecondaryLight,
+                  ),
                 ),
-              ),
-              Text(
-                isPrivacy ? '••••••' : '${isProfitable ? '+' : ''}${CurrencyFormatter.format(totalPnL)}',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: isProfitable ? AppColors.profit : AppColors.loss,
+                Text(
+                  isPrivacy ? '••••••' : '${isProfitable ? '+' : ''}${CurrencyFormatter.format(totalPnL)}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: isProfitable ? AppColors.profit : AppColors.loss,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 18),
           Divider(color: isDark ? Colors.white12 : AppColors.borderLight, height: 1),
@@ -546,28 +559,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isCompleted ? 'Hedefe Ulaşıldı! 🎉' : 'HEDEFE KALAN TUTAR',
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color: isCompleted ? AppColors.profit : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isCompleted ? 'Hedefe Ulaşıldı! 🎉' : 'HEDEFE KALAN TUTAR',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: isCompleted ? AppColors.profit : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      isCompleted ? 'Tebrikler!' : CurrencyFormatter.format(remaining, currencyCode: goal.currency, isPrivacy: isPrivacy),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: isCompleted ? AppColors.profit : AppColors.gold,
+                      const SizedBox(height: 4),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          isCompleted ? 'Tebrikler!' : CurrencyFormatter.format(remaining, currencyCode: goal.currency, isPrivacy: isPrivacy),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: isCompleted ? AppColors.profit : AppColors.gold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 8),
                 ElevatedButton.icon(
                   onPressed: () => _showQuickDepositDialog(context, goal),
                   icon: const Icon(Icons.add_rounded, size: 16),
@@ -616,10 +638,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Varlık Dağılımı',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              const Expanded(
+                child: Text(
+                  'Varlık Dağılımı',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+              const SizedBox(width: 8),
               Text(
                 '$totalItemCount Varlık Kalemi',
                 style: TextStyle(
@@ -661,15 +687,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
           ] else ...[
-            Row(
-              children: [
-                SizedBox(
-                  height: 130,
-                  width: 130,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isNarrow = constraints.maxWidth < 320;
+                final pieWidget = SizedBox(
+                  height: isNarrow ? 110 : 125,
+                  width: isNarrow ? 110 : 125,
                   child: PieChart(
                     PieChartData(
                       sectionsSpace: 3,
-                      centerSpaceRadius: 36,
+                      centerSpaceRadius: isNarrow ? 30 : 34,
                       sections: distribution.entries.map((entry) {
                         final cat = entry.key;
                         final val = entry.value;
@@ -678,60 +705,81 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           value: val,
                           color: color,
                           title: '',
-                          radius: 16,
+                          radius: 15,
                         );
                       }).toList(),
                     ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    children: distribution.entries.map((entry) {
-                      final cat = entry.key;
-                      final val = entry.value;
-                      final percent = (val / total) * 100;
-                      final color = _getCategoryColor(cat);
+                );
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                final legendWidget = Column(
+                  children: distribution.entries.map((entry) {
+                    final cat = entry.key;
+                    final val = entry.value;
+                    final percent = (val / total) * 100;
+                    final color = _getCategoryColor(cat);
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 9,
+                            height: 9,
+                            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              cat.displayName,
+                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                cat.displayName,
-                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                              ),
+                          ),
+                          Text(
+                            '%${percent.toStringAsFixed(1)}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                             ),
-                            Text(
-                              '%${percent.toStringAsFixed(1)}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
+                          ),
+                          const SizedBox(width: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
                               '(${CurrencyFormatter.formatCompact(val, isPrivacy: isPrivacy)})',
                               style: TextStyle(
                                 fontSize: 11,
                                 color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                               ),
                             ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+
+                if (isNarrow) {
+                  return Column(
+                    children: [
+                      Center(child: pieWidget),
+                      const SizedBox(height: 14),
+                      legendWidget,
+                    ],
+                  );
+                }
+
+                return Row(
+                  children: [
+                    pieWidget,
+                    const SizedBox(width: 14),
+                    Expanded(child: legendWidget),
+                  ],
+                );
+              },
             ),
           ],
         ],
@@ -1109,7 +1157,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Yedekleme & Geri Yükleme', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  const Expanded(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text('Yedekleme & Geri Yükleme', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
                   IconButton(onPressed: () => Navigator.pop(ctx), icon: const Icon(Icons.close_rounded)),
                 ],
               ),

@@ -209,10 +209,20 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Aylık Kenara Koyulacak Tutar:', style: TextStyle(fontSize: 13)),
-                    Text(
-                      CurrencyFormatter.format(_monthlySavings),
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                    const Expanded(
+                      child: Text(
+                        'Aylık Kenara Koyulacak Tutar:',
+                        style: TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        CurrencyFormatter.format(_monthlySavings),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryEmerald),
+                      ),
                     ),
                   ],
                 ),
@@ -231,7 +241,14 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Tahmini Yıllık Değer Artışı / Getiri:', style: TextStyle(fontSize: 13)),
+                    const Expanded(
+                      child: Text(
+                        'Tahmini Yıllık Getiri / Artış:',
+                        style: TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
                     Text(
                       '%${_annualReturnRate.toInt()}',
                       style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.gold),
@@ -270,9 +287,12 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
                   children: [
                     Icon(Icons.rocket_launch_rounded, color: AppColors.primaryEmerald, size: 24),
                     SizedBox(width: 8),
-                    Text(
-                      'Hedefe Ulaşma Süresi Tahmini',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        'Hedefe Ulaşma Süresi Tahmini',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -280,16 +300,19 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
                 Center(
                   child: Column(
                     children: [
-                      Text(
-                        calculatedMonths == 0
-                            ? 'Zaten Ulaşıldı! 🎉'
-                            : (estimatedYears > 0
-                                ? '$estimatedYears Yıl $estimatedRemainingMonths Ay'
-                                : '$calculatedMonths Ay'),
-                        style: TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.w900,
-                          color: isDark ? AppColors.primaryEmerald : const Color(0xFF00796B),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          calculatedMonths == 0
+                              ? 'Zaten Ulaşıldı! 🎉'
+                              : (estimatedYears > 0
+                                  ? '$estimatedYears Yıl $estimatedRemainingMonths Ay'
+                                  : '$calculatedMonths Ay'),
+                          style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w900,
+                            color: isDark ? AppColors.primaryEmerald : const Color(0xFF00796B),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -309,29 +332,51 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
 
                 // Out of pocket vs Return breakdown
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Cebinizden Çıkacak Tutar', style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
-                        const SizedBox(height: 2),
-                        Text(
-                          CurrencyFormatter.format(totalOutOfPocket),
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Cebinizden Çıkacak Tutar',
+                            style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 2),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              CurrencyFormatter.format(totalOutOfPocket),
+                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('Altın/Yatırım Getirisi Katkısı', style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
-                        const SizedBox(height: 2),
-                        Text(
-                          '+${CurrencyFormatter.format(profitFromAppreciation)}',
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.profit),
-                        ),
-                      ],
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Altın/Yatırım Getirisi',
+                            style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 2),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '+${CurrencyFormatter.format(profitFromAppreciation)}',
+                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.profit),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -82,20 +82,29 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Toplam Portföy Değeri',
-                      style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      CurrencyFormatter.format(totalValue, isPrivacy: isPrivacy),
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Toplam Portföy Değeri',
+                        style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 2),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          CurrencyFormatter.format(totalValue, isPrivacy: isPrivacy),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 8),
                 StatBadge(
                   text: isPrivacy ? '•••••• ₺' : '${isProfitable ? '+' : ''}${CurrencyFormatter.format(totalPnL)} (${CurrencyFormatter.formatPercent(totalPnLPercent)})',
                   icon: isProfitable ? Icons.trending_up_rounded : Icons.trending_down_rounded,
